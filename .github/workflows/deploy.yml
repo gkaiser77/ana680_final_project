@@ -29,10 +29,11 @@ jobs:
         push: true
         tags: gkaiser77/car-eval-model:latest
 
-    - name: Deploy to Heroku
-      uses: akshnz/heroku-deploy-action@v1.0.0
-      with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        app_name: ana680-final-project
-        branch: main
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "ana680-final-project"
+          heroku_email: "gkaiser77@gmail.com"
+
 
