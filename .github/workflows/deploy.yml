@@ -29,21 +29,10 @@ jobs:
         push: true
         tags: gkaiser77/car-eval-model:latest
 
-    - name: Install Heroku CLI
-      run: |
-        curl https://cli-assets.heroku.com/install.sh | sh
-
-    - name: Verify Heroku CLI Installation
-      run: heroku --version
-
-    - name: Log in to Heroku
-      run: |
-        echo ${{ secrets.HEROKU_API_KEY }} | heroku auth:token
-        heroku container:login
-
     - name: Deploy to Heroku
-      run: |
-        heroku container:login
-        heroku container:push web --app ana680-final-project
-        heroku container:release web --app ana680-final-project
+      uses: akshnz/heroku-deploy-action@v1.0.0
+      with:
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        app_name: ana680-final-project
+        branch: main
 
