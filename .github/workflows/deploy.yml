@@ -37,10 +37,9 @@ jobs:
       run: heroku --version
 
     - name: Log in to Heroku
-      run: echo ${{ secrets.HEROKU_API_KEY }} | heroku auth:token
-
-    - name: Verify Heroku Login
-      run: heroku auth:whoami
+      run: |
+        echo ${{ secrets.HEROKU_API_KEY }} | heroku auth:token
+        heroku container:login
 
     - name: Deploy to Heroku
       run: |
