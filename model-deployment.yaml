@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-evaluation-model
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: car-evaluation-model
+  template:
+    metadata:
+      labels:
+        app: car-evaluation-model
+    spec:
+      containers:
+      - name: car-evaluation-model
+        image: gkaiser77/car-evaluation-model-kuber:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-evaluation-model-service
+spec:
+  selector:
+    app: car-evaluation-model
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer
