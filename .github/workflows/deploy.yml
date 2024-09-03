@@ -3,7 +3,7 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main  
+      - main 
 
 jobs:
   deploy:
@@ -33,13 +33,18 @@ jobs:
       run: |
         curl https://cli-assets.heroku.com/install.sh | sh
 
+    - name: Verify Heroku CLI Installation
+      run: heroku --version
+
     - name: Log in to Heroku
       run: echo ${{ secrets.HEROKU_API_KEY }} | heroku auth:token
+
+    - name: Verify Heroku Login
+      run: heroku auth:whoami
 
     - name: Deploy to Heroku
       run: |
         heroku container:login
         heroku container:push web --app ana680-final-project
         heroku container:release web --app ana680-final-project
-
 
