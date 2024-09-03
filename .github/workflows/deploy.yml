@@ -3,7 +3,7 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main  # or master, depending on your branch name
+      - main  
 
 jobs:
   deploy:
@@ -29,14 +29,17 @@ jobs:
         push: true
         tags: gkaiser77/car-eval-model:latest
 
-    - name: Set up Heroku CLI
-      uses: akshat0x05/heroku-cli-action@v1.0.0
-      with:
-        api-key: ${{ secrets.HEROKU_API_KEY }}
+    - name: Install Heroku CLI
+      run: |
+        curl https://cli-assets.heroku.com/install.sh | sh
+
+    - name: Log in to Heroku
+      run: echo ${{ secrets.HEROKU_API_KEY }} | heroku auth:token
 
     - name: Deploy to Heroku
       run: |
         heroku container:login
         heroku container:push web --app ana680-final-project
         heroku container:release web --app ana680-final-project
+
 
